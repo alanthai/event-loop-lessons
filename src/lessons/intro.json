@@ -1,0 +1,101 @@
+{
+"code": [
+  "let a = 1;",
+  "",
+  "console.log(a);",
+  "",
+  "const foo = () => {",
+  "  bar();",
+  "};",
+  "",
+  "const bar = () => {",
+  "  a = 2;",
+  "};",
+  "",
+  "setTimeout(foo, 0);",
+  "setTimeout(() => {",
+  "  console.log(a);",
+  "}, 1);",
+  "",
+  "console.log(a);",
+  ""
+],
+"steps": [
+  {
+    "log": "The script starts in the global scope. We assign `a` to 1",
+    "highlights": [1],
+    "scope.setVariables": { "a": 1 }
+  },
+  {
+    "log": "console will log `a = 1`",
+    "highlights": [3]
+  },
+  {
+    "log": "Functions `foo` and `bar` are added to scope",
+    "highlights": [[5, 11]],
+    "scope.setVariables": { "foo": "@function", "bar": "@function" }
+  },
+  {
+    "log": "After 0 ms the `foo` callback is called. Since time is 0, it goes immediately to the callback queue",
+    "highlights": [13],
+    "queue.enqueue": { "message": "timeout(foo)" }
+  },
+  {
+    "log": "A second timeout after 1 ms for an anonymous function callback. A timer WebApi waits 1 ms",
+    "highlights": [[14, 16]],
+    "web.add": {
+      "id": "timer1",
+      "status": "waiting",
+      "content": "setTimeout(1)"
+    }
+  },
+  {
+    "log": "console will log `a = 1` since no timer callbacks have been called yet",
+    "highlights": [18]
+  },
+  {
+    "log": "The end of the script is reached",
+    "highlights": []
+  },
+  {
+    "log": "We dequeue the first item in the Callback Queue. We enter a new stack frame of the callback (foo)",
+    "highlights": [[5, 7]],
+    "queue.dequeue": 1,
+    "stack.push": [{"content": "foo()"}]
+  },
+  {
+    "log": "We call the `bar` function",
+    "highlights": [6]
+  },
+  {
+    "log": "A another stack frame is pushed. Variable `a` is set to 2",
+    "highlights": [10],
+    "stack.push": [{ "content": "bar()"}],
+    "scope.setVariables": { "a": 2 }
+  },
+  {
+    "log": "We reach the end of `bar` and `foo`. Both stack frames are popped",
+    "highlights": [],
+    "stack.pop": 2
+  },
+  {
+    "log": "After 1 ms, the setTimeout WebApi enqueues a timeout callback",
+    "web.remove": "timer1",
+    "queue.enqueue": { "message": "timer(anonymous)" }
+  },
+  {
+    "log": "Since there is nothing on the call stack, the first queue item is added, and a new stack frame is added",
+    "highlights": [[14, 16]],
+    "stack.push": [{ "content": "anonymous" }],
+    "queue.dequeue": 1
+  },
+  {
+    "log": "console will log `a = 2`",
+    "highlights": [15]
+  },
+  {
+    "log": "We reach the end",
+    "highlights": []
+  }
+]
+}

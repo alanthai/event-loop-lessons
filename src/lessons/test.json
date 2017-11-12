@@ -1,0 +1,77 @@
+{
+"code": [
+  "let a = 1;",
+  "",
+  "console.log(a);",
+  "",
+  "function foo() {",
+  "  bar();",
+  "}",
+  "",
+  "function bar() {",
+  "  a = 2;",
+  "}",
+  "",
+  "setTimeout(foo, 0);",
+  "setTimeout(() => {",
+  "  console.log(a);",
+  "}, 1);",
+  "",
+  "console.log(a);",
+  ""
+],
+"steps": [
+  {
+
+    "log": "Pushed 2 onto stack",
+    "highlights": [1],
+    "scope.setVariables": {
+      "hello": "world",
+      "obj": { "a": 1, "b": 2 }
+    },
+    "stack.push": [
+      { "content": "push something 1" },
+      { "content": "another push 2" }
+    ],
+    "queue.enqueue": { "message": "enqueue something" },
+    "web.add": {
+      "id": "zero",
+      "status": "none",
+      "content": "HTTP call"
+    }
+  },
+  {
+    "log": "Pushed 2 onto stack",
+    "highlights": [1],
+    "scope.setVariables": { "hello": "world" },
+    "stack.push": [
+      { "content": "push something 1" },
+      { "content": "another push 2" }
+    ]
+  },
+  {
+    "log": "Popped first item from stack",
+    "highlights": [],
+    "scope.push": ["foo()", { "a": 1 }],
+    "stack.pop": 1,
+    "queue.enqueue": { "message": "enqueue something" }
+  },
+  {
+    "queue.dequeue": true,
+    "scope.setVariables": { "a": 2 },
+    "web.add": {
+      "id": "firstAdd",
+      "status": "none",
+      "content": "HTTP call"
+    }
+  },
+  {
+    "scope.pop": 1,
+    "web.setStatus": { "id": "firstAdd", "status": "waiting" }
+  },
+  {
+    "scope.pop": 1,
+    "web.remove": "firstAdd"
+  }
+]
+}
