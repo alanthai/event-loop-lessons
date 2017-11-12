@@ -2,6 +2,7 @@
   "name": "event-loop",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "dependencies": {
     "react": "^16.1.0",
     "react-ace": "^5.5.0",

@@ -1,4 +1,6 @@
 {
+"title": "Introduction",
+"description": "JavaScript runs asynchronously through an event loop. Let's look at a simple example.",
 "code": [
   "let a = 1;",
   "",
@@ -95,6 +97,7 @@
   },
   {
     "log": "We reach the end",
+    "stack.pop": 1,
     "highlights": []
   }
 ]
