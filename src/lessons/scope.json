@@ -1,0 +1,80 @@
+{
+"title": "Scope",
+"description": "Every time you declare a variable, its accessibility is determined by where and how you declared it.",
+"code": [
+  "const a = 1;",
+  "const b = 2;",
+  "",
+  "const foo = function(c) {",
+  "  const d = 5;",
+  "  const b = 4;",
+  "",
+  "  console.log(a, b, c, d); // => 1 4 3 5",
+  "",
+  "  e = 5;",
+  "",
+  "  if (true) {",
+  "    const f = 6;",
+  "  }",
+  "",
+  "  console.log(f);// Uncaught ReferenceError",
+  "};",
+  "",
+  "foo(3);",
+  ""
+],
+"steps": [
+  {
+    "log": "The first type of scope is the \"Global scope\". All scripts start here. Global variables are accessible in every part of your app. We declare two variables here.",
+    "highlights": [1, 2],
+    "scope.setVariables": { "a": 1, "b": 2 }
+  },
+  {
+    "log": "Functions (and objects and arrays) can also be defined in global scope",
+    "highlights": [4],
+    "scope.setVariables": { "foo": "@function" }
+  },
+  {
+    "log": "By calling a function we enter the function's \"Local scope\"",
+    "highlights": [19]
+  },
+  {
+    "log": "Function parameters are passed into the local scope",
+    "highlights": [4],
+    "scope.push": ["foo()", { "c": 3 }],
+    "stack.push": [{ "content": "foo()" }]
+  },
+  {
+    "log": "You can also declare variables. They will only be accessible inside this function and in closures (more on that later).",
+    "highlights": [5],
+    "scope.setVariables": { "d": 5 }
+  },
+  {
+    "log": "By declaring `b` locally, we create a new variable and lose access to global `b` when referencing this variable name.",
+    "highlights": [6],
+    "scope.setVariables": { "b": 4 }
+  },
+  {
+    "log": "Assigning a new value to a variable that hasn't yet been declared with let/const/var will automatically declare it in the global scope. Never do this.",
+    "highlights": [10],
+    "scope.setVariables": ["Global", { "e": 5 }]
+  },
+  {
+    "log": "Inside conditionals and loops, `let` and `const` will only scope to them.",
+    "highlights": [13],
+    "scope.push": ["if", { "f": 6 }]
+  },
+  {
+    "log": "We leave the conditional's scope and `f` is no longer defined",
+    "highlights": [16],
+    "scope.pop": 1
+  },
+  {
+    "log": "We leave the function, and lose the ability to access local variables.",
+    "highlights": [17],
+    "scope.pop": 1,
+    "stack.pop": 1
+  },
+  { "log": "Notice `e` is in the Global scope, and `b` is untouched." }
+]
+}

@@ -7,10 +7,12 @@ import { combineActionDispatchers, combineSelectors } from '../store/utils';
 import { jsonToLesson } from '../utils/json-to-lesson';
 
 import intro from '../lessons/intro.json';
+import scope from '../lessons/scope.json';
+import closure from '../lessons/closure.json';
 // import test from '../lessons/test.json';
 
 
-const lessons = [intro].map(jsonToLesson);
+const lessons = [intro, scope, closure].map(jsonToLesson);
 
 const classSelected = "pointer underline";
 const classNormal = "pointer o-70 glow";

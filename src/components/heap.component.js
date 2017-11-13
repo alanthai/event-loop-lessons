@@ -3,9 +3,40 @@
 import React from 'react';
 
 
+// primitives only
+function getTypeClass(v) {
+  if (typeof v === 'string' && v[0] === '@') {
+    if (v.slice(1) === 'function') {
+      return 'i dark-gray';
+    } else if (v.slice(1) === 'undefined') {
+      return 'gray';
+    }
+  }
+  if (typeof v === 'string') {
+    return 'light-red';
+  }
+  if (v === null) {
+    return 'gray';
+  }
+  return 'blue';
+}
+
+function formatValue(v) {
+  if (typeof v !== 'string') {
+    return '' + v;
+  }
+
+  if (v[0] === '@') {
+    return v.slice(1);
+  } else {
+    return `"${v}"`;
+  }
+}
+
 const Primitive = ({ name, value }) => (
   <div>
-    <strong>{ name }:</strong> { value }
+    <strong>{ name }:</strong>&nbsp;
+    <code className={'f6 ' + getTypeClass(value)}>{ formatValue(value) }</code>
   </div>
 );
 

@@ -1,0 +1,88 @@
+{
+"title": "Closure",
+"description":"A closure occurs when an inner function references its outer function(s).",
+"code": [
+  "const foo = function() {",
+  "  let a = 1;",
+  "  const bar = function() {",
+  "    console.log(a);",
+  "  };",
+  "",
+  "  bar();",
+  "",
+  "  a = 2;",
+  "  bar();",
+  "",
+  "  return function() {",
+  "    a = 3;",
+  "    bar();",
+  "  };",
+  "};",
+  "",
+  "const baz = foo();",
+  "",
+  "baz();",
+  ""
+],
+"steps": [
+  {
+    "log": "Function `foo` is run.",
+    "highlights": [18],
+    "scope.setVariables": { "foo": "@function" }
+  },
+  {
+    "log": "Inside `foo` we declare `a` and `bar`.",
+    "highlights": [2],
+    "scope.push": ["foo()", { "a": 1, "bar": "@function" }],
+    "stack.push": [{ "content": "foo()" }]
+  },
+  {
+    "log": "`bar` is called.",
+    "highlights": [7]
+  },
+  {
+    "log": "`a` can be accessed in an inner function. This is a closure.",
+    "highlights": [4],
+    "stack.push": [{ "content": "bar()" }]
+  },
+  {
+    "log": "`bar` references the variable (not just the value)",
+    "highlights": [10],
+    "scope.setVariables": { "a": 2 },
+    "stack.pop": 1
+  },
+  {
+    "log": "console will log `2`.",
+    "highlights": [4],
+    "stack.push": [{ "content": "bar()" }]
+  },
+  {
+    "log": "An anonymous function is returned.",
+    "highlights": [[12, 15]],
+    "stack.pop": 1
+  },
+  {
+    "log": "The end of `foo` is reached.",
+    "highlights": [16],
+    "scope.pop": 1,
+    "stack.pop": 1
+  },
+  {
+    "log": "Calling `baz` runs the anonymous function.",
+    "highlights": [20],
+    "scope.setVariables": { "baz": "@function" }
+  },
+  {
+    "log": "The anonymous function also has closures `a` and `bar`.",
+    "highlights": [13, 14],
+    "scope.push": ["anonymous", { "a": 3, "bar": "@function" }],
+    "stack.push": [{ "content": "anonymous" }]
+  },
+  { "log": "Notice the call stack does not have `foo`. Closures do not carry over stack frames." },
+  {
+    "log": "console will log `3`.",
+    "highlights": [4],
+    "stack.push": [{ "content": "bar()" }]
+  }
+]
+}

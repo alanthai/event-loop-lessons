@@ -108,8 +108,8 @@ export const StepComponent = connect(
   }
 
   return (
-    <button onClick={showNextStep}>
-      Next Step
+    <button onClick={showNextStep} disabled={!step}>
+      { step ? 'Next Step' : 'Completed' }
     </button>
   );
 });
