@@ -38,12 +38,12 @@
     "scope.setVariables": { "foo": "@function", "bar": "@function" }
   },
   {
-    "log": "After 0 ms the `foo` callback is called. Since time is 0, it goes immediately to the callback queue",
+    "log": "setTimeout creates a Web API timer that waits some time before sending a given function to the Callback Queue. Since time is 0, it immediately sends `foo` to the queue",
     "highlights": [13],
     "queue.enqueue": { "message": "timeout(foo)" }
   },
   {
-    "log": "A second timeout after 1 ms for an anonymous function callback. A timer WebApi waits 1 ms",
+    "log": "Another setTimeout is created and waits 1 ms before sending an anonymous function to the queue",
     "highlights": [[14, 16]],
     "web.add": {
       "id": "timer1",
@@ -62,7 +62,7 @@
   {
     "log": "We dequeue the first item in the Callback Queue. We enter a new stack frame of the callback (foo)",
     "highlights": [[5, 7]],
-    "queue.dequeue": 1,
+    "queue.dequeue": true,
     "stack.push": [{"content": "foo()"}]
   },
   {
@@ -89,7 +89,7 @@
     "log": "Since there is nothing on the call stack, the first queue item is added, and a new stack frame is added",
     "highlights": [[14, 16]],
     "stack.push": [{ "content": "anonymous" }],
-    "queue.dequeue": 1
+    "queue.dequeue": true
   },
   {
     "log": "console will log `a = 2`",

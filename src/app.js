@@ -5,62 +5,74 @@ import './app.css';
 
 import { combineSelectors } from './store/utils';
 import * as HeapSelectors from './store/heap/heap.selectors';
-import * as StackSelectors from './store/stack/stack.selectors';
-import * as QueueSelectors from './store/queue/queue.selectors';
-import * as WebApiSelectors from './store/web-api/web-api.selectors';
 import * as LogsSelectors from './store/logs/logs.selectors';
+import * as LessonsSelectors from './store/lessons/lessons.selectors';
+import * as QueueSelectors from './store/queue/queue.selectors';
+import * as StackSelectors from './store/stack/stack.selectors';
+import * as WebApiSelectors from './store/web-api/web-api.selectors';
 
+import { CallbackQueue } from './components/callback-queue.component';
 import { CallStack } from './components/call-stack.component';
+import { CodeSnippet } from './components/code-snippet.component';
 import { Heap } from './components/heap.component';
 import { Logs } from './components/logs.component';
-import { CallbackQueue } from './components/callback-queue.component';
+import { Navigation } from './components/navigation.component';
 import { StepComponent } from './components/step.component';
 import { WebApi } from './components/web-api.component'
-import { CodeSnippet } from './components/code-snippet.component';
 
 
 export const App = connect(
   combineSelectors({
     logs: LogsSelectors.logs,
-    stackItems: StackSelectors.stackItems,
+    lessonTitle: LessonsSelectors.lessonTitle,
+    lessonDescription: LessonsSelectors.lessonDescription,
+    stackFrames: StackSelectors.stackFrames,
     queueMessages: QueueSelectors.queueMessages,
     variablePairs: HeapSelectors.variablePairs,
     webApiItems: WebApiSelectors.webApiItems,
   })
 )(({
   logs,
-  stackItems,
+  lessonTitle,
+  lessonDescription,
+  stackFrames,
   queueMessages,
   variablePairs,
   webApiItems,
 }) => (
-  <div className="flex flex-column">
-    <header className="App-header tc mb2">
-      <h1 className="App-title">Event Loop Lessons</h1>
+  <div className="grid main-layout vh-100">
+    <div className="light-silver bg-dark-gray flex items-end">
+      <strong className="f4 pa2">Lessons</strong>
+    </div>
+
+    <header className="light-gray bg-near-black flex items-end justify-center">
+      <h1 className="f3">Event Loop</h1>
     </header>
 
-    <section className="mb1">
-      <div>
-        <strong className="f3 mr2">Introduction</strong>
-        <StepComponent />
-      </div>
-      <p>
-      JavaScript runs asynchronously through an event loop. Let's look at a simple example
-      </p>
-    </section>
+    <Navigation />
 
-    <section className="mb3">
-      <div className="grid grid-layout">
-        <CodeSnippet />
-        <Heap variablePairs={variablePairs} />
-        <CallStack stackItems={stackItems} />
-        <WebApi webApiItems={webApiItems} />
-        <CallbackQueue messages={queueMessages} />
-      </div>
-    </section>
+    <article className="pa3">
+      <section className="mb1">
+        <div>
+          <strong className="f3 mr2">{ lessonTitle }</strong>
+          <StepComponent />
+        </div>
+        <p>{ lessonDescription }</p>
+      </section>
 
-    <section className="center w-100">
-      <Logs logs={logs} />
-    </section>
+      <section className="mb3">
+        <div className="grid lesson-layout">
+          <CodeSnippet />
+          <Heap variablePairs={variablePairs} />
+          <CallStack stackFrames={stackFrames} />
+          <WebApi webApiItems={webApiItems} />
+          <CallbackQueue messages={queueMessages} />
+        </div>
+      </section>
+
+      <section className="center w-100">
+        <Logs logs={logs} />
+      </section>
+    </article>
   </div>
 ));

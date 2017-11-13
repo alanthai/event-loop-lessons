@@ -52,31 +52,16 @@ body {
   border-color: var(--log-color);
 }
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
-}
-
-.App-header {
-  background-color: #222;
-  padding: 20px;
-  color: white;
-}
-
-.App-title {
-  font-size: 1.5em;
-}
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
 .grid {
   display: grid;
 }
 
-.grid-layout {
+.main-layout {
+  grid-template-columns: 12rem auto;
+  grid-template-rows: 5rem auto;
+}
+
+.lesson-layout {
   grid-gap: 1rem;
   /* 4x2 grid */
   grid-template-columns: 25rem 10rem 10rem 10rem;

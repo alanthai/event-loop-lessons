@@ -1,3 +1,5 @@
+// @flow
+
 import React from 'react';
 
 
@@ -23,7 +25,12 @@ const Variable = (variable) => (
     : Primitive(variable)
 );
 
-export const Heap = ({ variablePairs }) => {
+type VariablePair = [string, string];
+interface HeapArgs {
+  variablePairs: VariablePair[];
+}
+
+export const Heap = ({ variablePairs }: HeapArgs) => {
   return (
     <div className="heap b--heap-color b--solid bw1">
       <strong className="mb1 db bg-heap-color tc pa1 f4">Scope</strong>

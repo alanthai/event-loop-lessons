@@ -6,21 +6,17 @@ interface StackItem {
   readonly content: string;
 }
 
-interface StackState {
-  readonly items: StackItem[];
-}
+interface StackState = StackItem[]
 */
 
-const INITIAL_STATE = {
-  items: [],
-};
+const INITIAL_STATE = [];
 
 export function stackReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case PUSH_STACK_ITEMS:
-      return { ...state, items: state.items.concat(action.payload) };
+      return state.concat(action.payload);
     case POP_STACK_ITEMS:
-      return { ...state, items: state.items.slice(0, -action.payload) };
+      return state.slice(0, -action.payload);
     default:
       return state;
   }

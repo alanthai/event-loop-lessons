@@ -1,2 +1,1 @@
-export const stack = (state) => state.stack;
-export const stackItems = (state) => state.stack.items;
+export const stackFrames = (state) => state.stack;

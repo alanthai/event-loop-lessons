@@ -3,6 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "homepage": ".",
+  "scripts": {
+    "prestart": "npm run css",
+    "start": "react-scripts start",
+    "prebuild": "npm run css",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "css": "tachyons src/styles/app.css > src/index.css --minify",
+    "gh-pages": "git subtree push --prefix build origin gh-pages"
+  },
   "dependencies": {
     "react": "^16.1.0",
     "react-ace": "^5.5.0",
@@ -13,17 +23,10 @@
     "redux-logger": "^3.0.6",
     "redux-observable": "^0.17.0",
     "rxjs": "^5.5.2",
-    "tachyons": "^4.9.0",
-    "tachyons-cli": "^1.2.0"
+    "tachyons": "^4.9.0"
   },
-  "scripts": {
-    "prestart": "npm run css",
-    "start": "react-scripts start",
-    "prebuild": "npm run css",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "css": "tachyons src/styles/app.css > src/index.css --minify",
-    "gh-pages": "git subtree push --prefix build origin gh-pages"
+  "devDependencies": {
+    "flow-bin": "^0.59.0",
+    "tachyons-cli": "^1.2.0"
   }
 }

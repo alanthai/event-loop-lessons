@@ -7,6 +7,7 @@ import AceEditor from 'react-ace';
 
 import { combineSelectors } from '../store/utils';
 import * as CodeSnippetSelectors from '../store/code-snippet/code-snippet.selectors';
+import * as LessonsSelectors from '../store/lessons/lessons.selectors';
 
 
 if (brace) {} // hack to get rid of unused var error
@@ -28,10 +29,11 @@ function highlight(rows) {
 
 export const CodeSnippet = connect(
   combineSelectors({
+    code: LessonsSelectors.lessonCode,
     snippet: CodeSnippetSelectors.snippet,
     highlights: CodeSnippetSelectors.highlights,
   })
-)(({ highlights, snippet }) => (
+)(({ code, highlights, snippet }) => (
   <AceEditor
     mode="javascript"
     theme="github"
@@ -40,7 +42,7 @@ export const CodeSnippet = connect(
     highlightActiveLine={false}
     readOnly={true}
     markers={highlights.map(highlight)}
-    value={snippet}
+    value={code}
     width=""
     height=""
   />

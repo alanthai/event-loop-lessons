@@ -7,44 +7,47 @@ import * as LogsActions from '../store/logs/logs.actions';
 import * as QueueActions from '../store/queue/queue.actions';
 import * as StackActions from '../store/stack/stack.actions';
 import * as WebApiActions from '../store/web-api/web-api.actions';
-import { combineActionDispatchers } from '../store/utils';
-import lesson from '../lessons/intro.json';
+import * as LessonsActions from '../store/lessons/lessons.actions';
+import * as LessonsSelectors from '../store/lessons/lessons.selectors';
+import { combineActionDispatchers, combineSelectors } from '../store/utils';
 
 
 export const StepComponent = connect(
-  undefined,
+  combineSelectors({ step: LessonsSelectors.stepNext }),
   combineActionDispatchers({
     highlightLines: CodeSnippetActions.highlightLines,
     pushScope: HeapActions.pushScope,
     popScopes: HeapActions.popScopes,
     setVariables: HeapActions.setVariables,
     removeVariables: HeapActions.removeVariables,
-    pushStackItems: StackActions.pushStackItems,
-    popStackItems: StackActions.popStackItems,
+    pushStackFrames: StackActions.pushStackFrames,
+    popStackFrames: StackActions.popStackFrames,
     enqueueMessage: QueueActions.enqueueMessage,
     dequeueMessage: QueueActions.dequeueMessage,
     addWebApi: WebApiActions.addWebApi,
     removeWebApi: WebApiActions.removeWebApi,
     setWebApiStatus: WebApiActions.setWebApiStatus,
     pushLog: LogsActions.pushLog,
+    nextStep: LessonsActions.nextStep,
   })
 )(({
+  step,
   highlightLines,
   pushScope,
   popScopes,
   setVariables,
   removeVariables,
-  pushStackItems,
-  popStackItems,
+  pushStackFrames,
+  popStackFrames,
   enqueueMessage,
   dequeueMessage,
   addWebApi,
   removeWebApi,
   setWebApiStatus,
   pushLog,
+  nextStep,
 }) => {
-
-  function nextStep(step: Step) {
+  function showNextStep() {
     if (!step) {
       return;
     }
@@ -53,58 +56,59 @@ export const StepComponent = connect(
       highlightLines(step.highlights);
     }
 
-    if (step['scope.push']) {
-      pushScope(step['scope.push']);
+    if (step.scopePush) {
+      pushScope(step.scopePush);
     }
 
-    if (step['scope.pop']) {
-      popScopes(step['scope.pop']);
+    if (step.scopePop) {
+      popScopes(step.scopePop);
     }
 
-    if (step['scope.setVariables']) {
-      setVariables(step['scope.setVariables']);
+    if (step.scopeSetVariables) {
+      setVariables(step.scopeSetVariables);
     }
 
-    if (step['scope.removeVariables']) {
-      removeVariables(step['scope.removeVariables']);
+    if (step.scopeRemoveVariables) {
+      removeVariables(step.scopeRemoveVariables);
     }
 
-    if (step['stack.pop']) {
-      popStackItems(step['stack.pop']);
+    if (step.stackPop) {
+      popStackFrames(step.stackPop);
     }
 
-    if (step['stack.push']) {
-      pushStackItems(step['stack.push']);
+    if (step.stackPush) {
+      pushStackFrames(step.stackPush);
     }
 
-    if (step['queue.enqueue']) {
-      enqueueMessage(step['queue.enqueue']);
+    if (step.queueEnqueue) {
+      enqueueMessage(step.queueEnqueue);
     }
 
-    if (step['queue.dequeue']) {
+    if (step.queueDequeue) {
       dequeueMessage();
     }
 
-    if (step['web.add']) {
-      addWebApi(step['web.add']);
+    if (step.webAdd) {
+      addWebApi(step.webAdd);
     }
 
-    if (step['web.remove']) {
-      removeWebApi(step['web.remove']);
+    if (step.webRemove) {
+      removeWebApi(step.webRemove);
     }
 
-    if (step['web.setStatus']) {
-      setWebApiStatus(step['web.setStatus']);
+    if (step.webSetStatus) {
+      setWebApiStatus(step.webSetStatus);
     }
 
     if (step.log) {
       pushLog(step.log)
     }
+
+    nextStep();
   }
-  let i = 0;
 
   return (
-    <button onClick={() => nextStep(lesson.steps[i++])}>
+    <button onClick={showNextStep}>
       Next Step
     </button>
   );

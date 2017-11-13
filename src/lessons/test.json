@@ -1,4 +1,6 @@
 {
+"title": "Test",
+"description": "Test Description",
 "code": [
   "let a = 1;",
   "",
@@ -16,8 +18,6 @@
   "setTimeout(() => {",
   "  console.log(a);",
   "}, 1);",
-  "",
-  "console.log(a);",
   ""
 ],
 "steps": [
