@@ -1,11 +1,10 @@
 # TODO
 
-- Add routing
+- Order heap alphabetically
 - lessons:
   - observables
 - Add flow / typings
 - Explore YAML for lessons instead of JSON
-- Allow any types incompatible with JSON/YAML (eg, undefined, functions)
 - Improve styles
   - Switch from CSS styles to JS styles
   - Improve theme

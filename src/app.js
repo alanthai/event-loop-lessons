@@ -10,6 +10,7 @@ import * as LessonsSelectors from './store/lessons/lessons.selectors';
 import * as QueueSelectors from './store/queue/queue.selectors';
 import * as StackSelectors from './store/stack/stack.selectors';
 import * as WebApiSelectors from './store/web-api/web-api.selectors';
+import * as CodeSnippetSelectors from './store/code-snippet/code-snippet.selectors';
 
 import { CallbackQueue } from './components/callback-queue.component';
 import { CallStack } from './components/call-stack.component';
@@ -23,18 +24,22 @@ import { WebApi } from './components/web-api.component'
 
 export const App = connect(
   combineSelectors({
+    highlights: CodeSnippetSelectors.highlights,
     logs: LogsSelectors.logs,
-    lessonTitle: LessonsSelectors.lessonTitle,
+    lessonCode: LessonsSelectors.lessonCode,
     lessonDescription: LessonsSelectors.lessonDescription,
+    lessonTitle: LessonsSelectors.lessonTitle,
     stackFrames: StackSelectors.stackFrames,
     queueMessages: QueueSelectors.queueMessages,
     variablePairs: HeapSelectors.variablePairs,
     webApiItems: WebApiSelectors.webApiItems,
   })
 )(({
+  highlights,
   logs,
-  lessonTitle,
+  lessonCode,
   lessonDescription,
+  lessonTitle,
   stackFrames,
   queueMessages,
   variablePairs,
@@ -49,7 +54,7 @@ export const App = connect(
       <h1 className="f3">Event Loop</h1>
     </header>
 
-    <Navigation />
+    <Navigation currentLesson={lessonTitle} />
 
     <article className="pa3">
       <section className="mb1">
@@ -62,7 +67,7 @@ export const App = connect(
 
       <section className="mb3">
         <div className="grid lesson-layout">
-          <CodeSnippet />
+          <CodeSnippet code={lessonCode} highlights={highlights} />
           <Heap variablePairs={variablePairs} />
           <CallStack stackFrames={stackFrames} />
           <WebApi webApiItems={webApiItems} />

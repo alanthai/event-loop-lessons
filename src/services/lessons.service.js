@@ -8,10 +8,9 @@ import intro from '../lessons/intro.json';
 import scope from '../lessons/scope.json';
 import closure from '../lessons/closure.json';
 import keywordThis from '../lessons/keyword-this.json';
-// import test from '../lessons/test.json';
 
 
-const lessons = [intro, scope, closure, keywordThis]
+const lessons = [intro, scope, closure, keywordThis];
 
 const lessonsMap = lessons.map(jsonToLesson)
   .reduce((map, lesson) => {
@@ -27,18 +26,17 @@ function cleanTitle(title) {
   return encodeURIComponent(fragment).toLowerCase();
 }
 
-class RouterService {
+class LessonsService {
   constructor(locationService, store) {
     this.locationService = locationService;
     this.store = store;
 
     this.fragment = null;
 
-    locationService.onHashChange((hash) => {
-      const fragment = hash.slice(1);
+    locationService.onHashChange((fragment) => {
       if (this.fragment !== fragment) {
         this.fragment = fragment;
-        this.setLesson(fragment);
+        this.dispatchSetLesson(fragment);
       }
     });
   }
@@ -47,19 +45,19 @@ class RouterService {
     return lessonTitles;
   }
 
-  navigate(lessonTitle) {
+  setLesson(lessonTitle) {
     const cleanedTitle = cleanTitle(lessonTitle || lessons[0].title);
 
     this.fragment = cleanedTitle;
     this.locationService.setHash(cleanedTitle);
 
-    this.setLesson(cleanedTitle);
+    this.dispatchSetLesson(cleanedTitle);
   }
 
   /**
    * @private
    */
-  setLesson(cleanedTitle) {
+  dispatchSetLesson(cleanedTitle) {
     const lesson = lessonsMap[cleanedTitle];
 
     if (lesson) {
@@ -68,4 +66,4 @@ class RouterService {
   }
 }
 
-export const routerService = new RouterService(locationService, store);
+export const lessonsService = new LessonsService(locationService, store);

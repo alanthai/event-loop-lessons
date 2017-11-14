@@ -1,4 +1,8 @@
 class LocationService {
+  get fragment() {
+    return this.location.hash.slice(1);
+  }
+
   constructor(window, history, location) {
     this.setHash = history.pushState
       ? (fragment) => { history.pushState({}, '', `#${fragment}`); }
@@ -9,12 +13,12 @@ class LocationService {
   }
 
   onHashChange(callback) {
-    const f = () => callback(this.location.hash);
+    const f = () => callback(this.fragment);
     this.window.addEventListener('popstate', f);
 
     // unsubscribe
     return () => {
-      this.window.removeEventListener('hashchange', f);
+      this.window.removeEventListener('popstate', f);
     };
   }
 
@@ -22,4 +26,8 @@ class LocationService {
   setHash() {}
 }
 
-export const locationService = new LocationService(window, window.history, window.location);
+export const locationService = new LocationService(
+  window,
+  window.history,
+  window.location
+);

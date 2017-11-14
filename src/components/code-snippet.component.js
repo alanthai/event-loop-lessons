@@ -1,13 +1,8 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import brace from 'brace';
 import 'brace/mode/javascript';
 import 'brace/theme/github';
 import AceEditor from 'react-ace';
-
-import { combineSelectors } from '../store/utils';
-import * as CodeSnippetSelectors from '../store/code-snippet/code-snippet.selectors';
-import * as LessonsSelectors from '../store/lessons/lessons.selectors';
 
 
 if (brace) {} // hack to get rid of unused var error
@@ -27,12 +22,7 @@ function highlight(rows) {
   };
 }
 
-export const CodeSnippet = connect(
-  combineSelectors({
-    code: LessonsSelectors.lessonCode,
-    highlights: CodeSnippetSelectors.highlights,
-  })
-)(({ code, highlights }) => (
+export const CodeSnippet = (({ code, highlights }) => (
   <AceEditor
     mode="javascript"
     theme="github"

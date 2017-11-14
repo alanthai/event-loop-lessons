@@ -1,6 +1,6 @@
 {
 "title": "Closure",
-"description":"A closure occurs when an inner function references its outer function(s).",
+"description":"A closure occurs when an inner function references variables of its outer function(s).",
 "code": [
   "const foo = function() {",
   "  let a = 1;",
@@ -32,7 +32,7 @@
   },
   {
     "log": "Inside `foo` we declare `a` and `bar`.",
-    "highlights": [2],
+    "highlights": [[2, 5]],
     "scope.push": ["foo()", { "a": 1, "bar": "@function" }],
     "stack.push": [{ "content": "foo()" }]
   },

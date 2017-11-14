@@ -5,10 +5,11 @@ import { Provider } from 'react-redux';
 import './index.css';
 import { App } from './app';
 import { store } from './store/store';
-import { routerService } from './services/router.service';
+import { locationService } from './services/location.service';
+import { lessonsService } from './services/lessons.service';
 
 
-routerService.navigate(window.location.hash.slice(1));
+lessonsService.setLesson(locationService.fragment);
 
 ReactDOM.render(
   (<Provider store={store}>
