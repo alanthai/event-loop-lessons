@@ -1,0 +1,94 @@
+{
+"title": "Keyword `this`",
+"description": "Every scope has the variable `this` that refers to the the object or \"context\" to which the running function belongs",
+"code": [
+  "const logThis = function () {",
+  "  console.log(this);",
+  "};",
+  "logThis();",
+  "",
+  "const objA = {};",
+  "objA.logThis = logThis;",
+  "objA.logThis();",
+  "",
+  "const objB = {};",
+  "logThis.call(objB);",
+  "objA.logThis.call(objB);",
+  "",
+  "objA.foo = function() {",
+  "  function bar() {",
+  "    console.log(this);",
+  "  }",
+  "  // const bar = () => { console.log(this); }",
+  "  bar();",
+  "};",
+  "objA.foo();",
+  ""
+],
+"steps": [
+  { "log": "For this lesson only, we will show `this` in the scope. Sometimes `this` will be referred to as the \"context\"." },
+  {
+    "log": "On App start, we are in the global execution context, and `this` refers to the `window` object.",
+    "scope.setVariables": { "this": "@Window" }
+  },
+  {
+    "log": "We call `logThis` as a function call (as opposed to a method call).",
+    "highlights": [4],
+    "scope.setVariables": { "logThis": "@function" }
+  },
+  {
+    "log": "Function calls are never associated with an object so `this` remains as `window`.",
+    "highlights": [2],
+    "stack.push": [{ "content": "logThis()" }]
+  },
+  {
+    "log": "We assign `logThis` to our new object.",
+    "highlights": [6, 7],
+    "stack.pop": 1,
+    "scope.setVariables": { "objA": "@<objA>" }
+  },
+  {
+    "log": "We call `logThis` from `objA` as a method call.",
+    "highlights": [8]
+  },
+  {
+    "log": "`this` is now `objA`.",
+    "highlights": [2],
+    "stack.push": [{ "content": "logThis()" }],
+    "scope.push": ["logThis", { "this": "@<objA>" }]
+  },
+  { "log": "We can assign `logThis` to multiple objects as methods and they will all have the different contexts." },
+  { "log": "Calling `logThis` as a function call will also still give `window` as the context" },
+  {
+    "log": "Functions and method have methods `.call()`, `.apply()`, and `.bind()` that allow you to choose the context",
+    "highlights": [11, 12],
+    "scope.pop": 1,
+    "scope.setVariables": { "objB": "@<objB>" },
+    "stack.pop": 1
+  },
+  {
+    "log": "`this` is now `objB`.",
+    "highlights": [2],
+    "scope.push": ["logThis", { "this": "@<objB>" }],
+    "stack.push": [{ "content": "logThis()" }]
+  },
+  {
+    "log": "One more tricky bit.",
+    "highlights": [[14, 21]],
+    "scope.pop": 1,
+    "stack.pop": 1
+  },
+  {
+    "log": "Despite being inside a method, normal function calls have a context of `window`. Don't forget!",
+    "highlights": [16],
+    "stack.push": [{ "content": "foo()" }, { "content": "bar()" }],
+    "scope.push": ["foo", { "bar": "@function" }]
+  },
+  {
+    "log": "To get around this, use arrow function to access the first (non-arrow function) outer function or method",
+    "highlights": [18],
+    "scope.setVariables": { "this": "@<objA>" },
+    "stack.pop": 1
+  }
+]
+}

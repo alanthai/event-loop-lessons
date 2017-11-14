@@ -6,10 +6,10 @@ import React from 'react';
 // primitives only
 function getTypeClass(v) {
   if (typeof v === 'string' && v[0] === '@') {
-    if (v.slice(1) === 'function') {
-      return 'i dark-gray';
-    } else if (v.slice(1) === 'undefined') {
+    if (v.slice(1) === 'undefined') {
       return 'gray';
+    } else {
+      return 'i dark-gray';
     }
   }
   if (typeof v === 'string') {

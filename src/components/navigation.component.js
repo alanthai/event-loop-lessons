@@ -1,39 +1,33 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
+import { routerService } from '../services/router.service';
 import * as LessonsSelectors from '../store/lessons/lessons.selectors';
 import * as LessonsActions from '../store/lessons/lessons.actions';
 import { combineActionDispatchers, combineSelectors } from '../store/utils';
-import { jsonToLesson } from '../utils/json-to-lesson';
 
-import intro from '../lessons/intro.json';
-import scope from '../lessons/scope.json';
-import closure from '../lessons/closure.json';
-// import test from '../lessons/test.json';
-
-
-const lessons = [intro, scope, closure].map(jsonToLesson);
 
 const classSelected = "pointer underline";
 const classNormal = "pointer o-70 glow";
 
 export const Navigation = connect(
-  combineSelectors({ lessonTitle: LessonsSelectors.lessonTitle }),
+  combineSelectors({ currentTitle: LessonsSelectors.lessonTitle }),
   combineActionDispatchers({ setLesson: LessonsActions.setLesson })
-)(({ lessonTitle, setLesson }) => {
-  const onClick = (lesson) => lessonTitle !== lesson.title && setLesson(lesson);
-  const className = (lesson) =>
-    lessonTitle === lesson.title ? classSelected : classNormal;
+)(({ currentTitle, setLesson }) => {
+  const onClick = (title) =>
+    currentTitle !== title && routerService.navigate(title);
+  const className = (title) =>
+    currentTitle === title ? classSelected : classNormal;
 
   return (
     <nav className="bg-near-white">
       <ul className="list lh-copy">
         {
-          lessons.map((lesson, i) =>
-            <li key={lesson.title}
-                className={className(lesson)}
-                onClick={() => onClick(lesson)}>
-              { lesson.title }
+          routerService.getLessonTitles().map((title) =>
+            <li key={title}
+                className={className(title)}
+                onClick={() => onClick(title)}>
+              { title }
             </li>
           )
         }

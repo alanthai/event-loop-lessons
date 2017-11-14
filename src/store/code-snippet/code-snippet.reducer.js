@@ -2,7 +2,6 @@ import {
   HIGHLIGHT_LINES,
   SET_SNIPPET,
 } from './code-snippet.actions';
-import lesson from '../../lessons/intro.json';
 
 
 /*
@@ -13,7 +12,7 @@ interface CodeSnippetState {
 */
 
 const INITIAL_STATE = {
-  snippet: lesson.code.join('\n'),
+  snippet: '',
   highlights: [],
 };
 

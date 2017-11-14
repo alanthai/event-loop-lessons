@@ -30,10 +30,9 @@ function highlight(rows) {
 export const CodeSnippet = connect(
   combineSelectors({
     code: LessonsSelectors.lessonCode,
-    snippet: CodeSnippetSelectors.snippet,
     highlights: CodeSnippetSelectors.highlights,
   })
-)(({ code, highlights, snippet }) => (
+)(({ code, highlights }) => (
   <AceEditor
     mode="javascript"
     theme="github"
@@ -42,6 +41,7 @@ export const CodeSnippet = connect(
     highlightActiveLine={false}
     readOnly={true}
     markers={highlights.map(highlight)}
+    editorProps={{$blockScrolling: true}}
     value={code}
     width=""
     height=""

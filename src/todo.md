@@ -2,8 +2,6 @@
 
 - Add routing
 - lessons:
-  - closure
-  - hoisting
   - observables
 - Add flow / typings
 - Explore YAML for lessons instead of JSON

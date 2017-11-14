@@ -1,11 +1,14 @@
 import { combineReducers } from 'redux';
 
 import { SET_LESSON, NEXT_STEP } from './lessons.actions';
-import { jsonToLesson } from '../../utils/json-to-lesson';
-import lesson from '../../lessons/intro.json';
 
 
-const initialLesson = jsonToLesson(lesson);
+const initialLesson = {
+  title: '',
+  description: '',
+  code: '',
+  steps: [],
+};
 
 function stepReducer(state = 0, action) {
   switch (action.type) {
