@@ -5,10 +5,22 @@ function jsonToStep(jsonStep) {
   }, {});
 }
 
+let messageId = 0;
+function assignQueueItemsId(step) {
+  if (!step.queueEnqueue) {
+    return step;
+  }
+
+  const queueEnqueue = { id: messageId++, ...step.queueEnqueue };
+  return { ...step, queueEnqueue };
+}
+
 export function jsonToLesson(jsonLesson) {
   return {
     ...jsonLesson,
     code: jsonLesson.code.join('\n'),
-    steps: jsonLesson.steps.map(jsonToStep),
+    steps: jsonLesson.steps
+      .map(jsonToStep)
+      .map(assignQueueItemsId),
   };
 }

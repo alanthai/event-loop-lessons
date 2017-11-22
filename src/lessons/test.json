@@ -22,7 +22,6 @@
 ],
 "steps": [
   {
-
     "log": "Pushed 2 onto stack",
     "highlights": [1],
     "scope.setVariables": {

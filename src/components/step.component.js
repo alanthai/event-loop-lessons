@@ -107,8 +107,12 @@ export const StepComponent = connect(
     nextStep();
   }
 
+  const btnColor = step ? 'bg-dark-gray' : 'bg-mid-gray';
   return (
-    <button onClick={showNextStep} disabled={!step}>
+    <button
+      className={`f6 link ph3 pv2 dib white ${ btnColor }`}
+      onClick={showNextStep}
+      disabled={!step}>
       { step ? 'Next Step' : 'Completed' }
     </button>
   );

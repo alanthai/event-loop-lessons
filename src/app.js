@@ -58,7 +58,7 @@ export const App = connect(
 
     <article className="pa3">
       <section className="mb1">
-        <div>
+        <div className="flex items-center">
           <strong className="f3 mr2">{ lessonTitle }</strong>
           <StepComponent />
         </div>

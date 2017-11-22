@@ -53,11 +53,12 @@ function removeVariables(state, payload) {
     variableNames = payload.variables;
   }
 
-  const [scope] = state[scopeIndex];
-  const newVariables = omit(variableNames, scope);
-  return state
-    .slice()
-    .splice(scopeIndex, 1, [scope, newVariables]);
+  const [scope, variables] = state[scopeIndex];
+  const newVariables = omit(variableNames, variables);
+
+  const newState = state.splice();
+  newState.splice(scopeIndex, 1, [scope, newVariables]);
+  return newState;
 }
 
 export function heapReducer(state = INITIAL_STATE, action) {
