@@ -1,6 +1,5 @@
 # TODO
 
-- Order heap alphabetically
 - lessons:
   - observables
   - promises?
@@ -17,3 +16,6 @@
 - Add previous step button
 - Add help (?) buttons for Scope/Stack/Web API/Queue
 - Update github with gh-pages link and screencap
+
+
+## Lessons

@@ -1,4 +1,5 @@
-import { Lesson } from '../../types/lesson.type';
+import type { Lesson } from '../../types/lesson.type';
+import type { Step } from '../../types/step.type';
 
 
 export const SET_LESSON = 'lessons/SET_LESSON';
@@ -9,6 +10,7 @@ export const setLesson = (lesson: Lesson) => ({
   payload: lesson,
 });
 
-export const nextStep = () => ({
+export const nextStep = (step: Step) => ({
   type: NEXT_STEP,
+  payload: step,
 });

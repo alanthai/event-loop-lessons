@@ -10,6 +10,8 @@ import { QueueItem } from './queue-item.type';
 export interface Step {
   +highlights?: number[];
   +heap?: any;
+  +scopePush: [string, any];
+  +scopePop: number;
   +scopeSetVariables?: any;
   +scopeRemoveVariables?: string[];
   +stackPop?: number;

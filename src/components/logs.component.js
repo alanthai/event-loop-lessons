@@ -7,10 +7,12 @@ const NoLogs = () => (
 
 const LogItems = ({ logs }) => (
   <div className="flex flex-column-reverse mt2">
-    {
-      logs.map((log, i) =>
-        <div key={i}>◆ { log }</div>)
-    }
+    {logs.map((log, i) => {
+      const last = i === logs.length - 1;
+      return (<div key={i} className={last ? 'near-black' : 'mid-gray'}>
+        ‣ { log }
+      </div>);
+    })}
   </div>
 );
 
