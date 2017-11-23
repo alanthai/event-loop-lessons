@@ -9,7 +9,7 @@ import { stackReducer } from '../stack/stack.reducer';
 import { webApiReducer } from '../web-api/web-api.reducer';
 
 
-export const lessonReducer = combineReducers({
+export const lessonStepReducer = combineReducers({
   codeSnippet: codeSnippetReducer,
   heap: heapReducer,
   logs: logsReducer,

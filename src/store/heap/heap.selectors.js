@@ -1,7 +1,7 @@
 import { toPairs } from '../../utils/to-pairs';
 
 
-export const heap = (state) => state.heap;
+export const heap = (state) => state.present.heap;
 
 export const variables = (state) => {
   const allVariables = heap(state).map(([, variables]) => variables);

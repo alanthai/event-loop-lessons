@@ -2,10 +2,12 @@
 
 import { pipeReducers } from './utils';
 import { lessonsCoordinatorReducer } from './lessons/lessons-coordinator.reducer';
-import { lessonReducer } from './lessons/lesson-step.reducer';
+import { lessonStepReducer } from './lessons/lesson-step.reducer';
+import { historyReducer } from './history/history.reducer';
+import { SET_LESSON } from './lessons/lessons.actions';
 
 
-export const rootReducer = pipeReducers(
+export const rootReducer = historyReducer(pipeReducers(
   lessonsCoordinatorReducer,
-  lessonReducer
-);
+  lessonStepReducer
+), { clear: SET_LESSON });

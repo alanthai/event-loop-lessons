@@ -1,7 +1,9 @@
-const lesson = (state) => state.lessons.lesson;
+const lessons = (state) => state.present.lessons;
+const lesson = (state) => lessons(state).lesson;
+const step = (state) => lessons(state).step;
 
 export const stepNext = (state) => {
-  const stepNumber = state.lessons.step;
+  const stepNumber = step(state);
   const steps = lesson(state).steps;
   return steps[stepNumber];
 };

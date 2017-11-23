@@ -1,1 +1,1 @@
-export const stackFrames = (state) => state.stack;
+export const stackFrames = (state) => state.present.stack;

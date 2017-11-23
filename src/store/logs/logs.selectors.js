@@ -1,1 +1,1 @@
-export const logs = (state) => state.logs;
+export const logs = (state) => state.present.logs;

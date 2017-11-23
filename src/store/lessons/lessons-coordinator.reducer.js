@@ -6,7 +6,7 @@ import * as QueueActions from '../../store/queue/queue.actions';
 import * as StackActions from '../../store/stack/stack.actions';
 import * as WebApiActions from '../../store/web-api/web-api.actions';
 
-import { lessonReducer } from './lesson-step.reducer';
+import { lessonStepReducer } from './lesson-step.reducer';
 
 
 function* nextStepActions(step) {
@@ -75,7 +75,7 @@ function nextActions(step) {
 
 function nextStep(state, stepAction) {
   return nextActions(stepAction.payload).reduce((newState, action) => {
-    return lessonReducer(newState, action);
+    return lessonStepReducer(newState, action);
   }, state);
 }
 
